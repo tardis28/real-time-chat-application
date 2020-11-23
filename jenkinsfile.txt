@@ -3,8 +3,37 @@ pipeline {
 		stages {
 			stage('One'){
 				steps {
-					echo 'Hi'
+					echo 'Step 1 running'
 				}
+			}
+			stage('Two'){
+				steps {
+					input('Do you want to proceed?')
+				}
+			}
+			stage('Three'){
+				when {
+					not {
+						branch "main"
+					}
+				}
+				steps {
+					echo 'Hello'
+				}
+			}
+			stage('Four') {
+					parallel {
+						stage('Four_a'){
+							steps {
+					echo 'Running 4(a)'
+							}
+						}
+						stage('Four_b'){
+							steps {
+					echo 'Running 4(b)'
+							}
+						}
+					}
 			}
 		}
 }
